@@ -17,7 +17,6 @@ const read = (req, res) => {
 }
 
 const update = (req, res) => {
-	console.log('update user - req.user', req.user, 'UPDATE DATA', req.body)
 	const { name, password } = req.body
 
 	User.findOne({ _id: req.user._id }, (error, user) => {
@@ -47,7 +46,6 @@ const update = (req, res) => {
 
 		user.save((error, updatedUser) => {
 			if (error) {
-				console.log('user update error', error)
 				return res.status(400).json({
 					error: 'User update failed'
 				})

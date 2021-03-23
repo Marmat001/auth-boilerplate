@@ -26,12 +26,10 @@ const ForgotPasswordPage = ({ history }) => {
       data: { email },
     })
       .then((resp) => {
-        console.log('Forgot password successful!', resp)
         toast.success(resp.data.message)
         setUserInfo({ ...userInfo, buttonText: 'Requested' })
       })
       .catch((err) => {
-        console.log('forgot password error', err.response.data)
         toast.error(err.response.data.error)
         setUserInfo({ ...userInfo, buttonText: 'Request password reset link' })
       })

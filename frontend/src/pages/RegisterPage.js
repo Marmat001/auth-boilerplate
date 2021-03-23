@@ -33,7 +33,6 @@ const RegisterPage = () => {
       data: { name, email, password },
     })
       .then((resp) => {
-        console.log('Sign up successful!', resp)
         setUserInfo({
           ...userInfo,
           name: '',
@@ -45,7 +44,6 @@ const RegisterPage = () => {
         toast.success(resp.data.message)
       })
       .catch((err) => {
-        console.log('Sign up error', err.response.data)
         setUserInfo({ ...userInfo, buttonText: 'Submit' })
         toast.error(err.response.data.error)
       })
@@ -97,11 +95,22 @@ const RegisterPage = () => {
         <button
           disabled={buttonText === 'Submitted' || buttonText === 'Submitting'}
           onClick={handleSubmit}
-          className='btn btn-primary btn-raised'
+          className='btn btn-primary btn-raised mr-3'
         >
           {buttonText}
         </button>
+
+        <Link
+          to='/authentication/forgot-password'
+          className='btn btn-sm btn-outline-danger'
+        >
+          Forgot Password?
+        </Link>
       </div>
+
+      <Link to='/login' className='btn btn-sm btn-outline-primary mt-3'>
+        Have an account? Log In
+      </Link>
     </form>
   )
 
@@ -111,13 +120,6 @@ const RegisterPage = () => {
         {isAuthenticated() ? <Redirect to='/' /> : null}
         <h1 className='p-5 text-center'>Register</h1>
         {signUpForm()}
-        <br />
-        <Link
-          to='/authentication/forgot-password'
-          className='btn btn-sm btn-outline-danger'
-        >
-          Forgot Password?
-        </Link>
       </div>
     </BluePrint>
   )

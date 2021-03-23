@@ -26,12 +26,13 @@ const PrivatePage = ({ history }) => {
   const handleChange = (name) => (e) => {
     setUserInfo({ ...userInfo, [name]: e.target.value })
   }
+  const token = getCookie('token')
 
   useEffect(() => {
     loadProfileInfo()
+    // eslint-disable-next-line
   }, [])
 
-  const token = getCookie('token')
 
   const loadProfileInfo = () => {
     axios({
@@ -42,7 +43,6 @@ const PrivatePage = ({ history }) => {
       },
     })
       .then((resp) => {
-        console.log('private profile update', resp)
         const { role, name, email } = resp.data
         setUserInfo({ ...userInfo, role, name, email })
       })
@@ -69,7 +69,6 @@ const PrivatePage = ({ history }) => {
       data: { name, password },
     })
       .then((resp) => {
-        console.log('Profile update successful!', resp)
         updateUserInfo(resp, () => {
           setUserInfo({
             ...userInfo,
@@ -81,7 +80,6 @@ const PrivatePage = ({ history }) => {
         })
       })
       .catch((err) => {
-        console.log('Profile update error', err.response.data.error)
         setUserInfo({ ...userInfo, buttonText: 'Submit' })
         toast.error(err.response.data.error)
       })

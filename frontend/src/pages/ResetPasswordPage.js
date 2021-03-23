@@ -21,6 +21,7 @@ const ResetPasswordPage = ({ match, history }) => {
     if (token) {
       setUserInfo({ ...userInfo, name, token })
     }
+     // eslint-disable-next-line
   }, [])
 
   const { name, token, newPassword, confirmNewPassword, buttonText } = userInfo
@@ -40,7 +41,6 @@ const ResetPasswordPage = ({ match, history }) => {
       data: { newPassword, resetPasswordLink: token },
     })
       .then((resp) => {
-        console.log('reset password successful!', resp)
         toast.success(resp.data.message)
         setUserInfo({ ...userInfo, buttonText: 'Done' })
         setTimeout(() => {
@@ -48,7 +48,6 @@ const ResetPasswordPage = ({ match, history }) => {
         }, 1500)
       })
       .catch((err) => {
-        console.log('reset password error', err.response.data)
         toast.error(err.response.data.error)
         setUserInfo({ ...userInfo, buttonText: 'Reset password' })
       })

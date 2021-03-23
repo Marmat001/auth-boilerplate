@@ -8,32 +8,6 @@ const fetch = require('node-fetch')
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
-// const signup = (req, res) => {
-// 	console.log('Req body on signup', req.body)
-// 	const { name, email, password } = req.body
-
-// 	User.findOne({ email }).exec((err, user) => {
-// 		if (user) {
-// 			return res.status(400).json({
-// 				error: 'Email is already taken'
-// 			})
-// 		}
-// 	})
-
-// 	const newUser = new User({ name, email, password })
-
-// 	newUser.save((error, success) => {
-// 		if (error) {
-// 			console.log('signup error', err)
-// 			return res.status(400).json({
-// 				error
-// 			})
-// 		}
-// 		res.json({
-// 			message: 'Sign up successful!'
-// 		})
-// 	})
-// }
 
 const register = (req, res) => {
 	const { name, email, password } = req.body
@@ -81,7 +55,6 @@ const accountActivation = (req, res) => {
 	if (token) {
 		jwt.verify(token, process.env.JWT_ACCOUNT_ACTIVATION, function(error, decoded) {
 			if (error) {
-				console.log('JWT VERIFY IN ACCOUNT ACTIVATION ERROR', error)
 				return res.status(401).json({
 					error: 'Expired link. Sign up again.'
 				})
@@ -93,7 +66,6 @@ const accountActivation = (req, res) => {
 
 			user.save((error, user) => {
 				if (error) {
-					console.log('save user in account activtion error', error)
 					return res.status(401).json({
 						error: 'Error saving user in database. Try to sign up again.'
 					})
@@ -183,7 +155,6 @@ const forgotPassword = (req, res) => {
 
 		return user.updateOne({ resetPasswordLink: token }, (error, success) => {
 			if (error) {
-				console.log('reset password link error', error)
 				return res.status(400).json({
 					error: 'Database connection error on user password forgot request'
 				})
@@ -266,7 +237,6 @@ const googleLogin = (req, res) => {
 					user = new User({ name, email, password })
 					user.save((error, data) => {
 						if (error) {
-							console.log('ERROR GOOGLE LOGIN ON USER SAVE', error)
 							return res.status(400).json({
 								error: 'User signup failed with google'
 							})
@@ -289,7 +259,6 @@ const googleLogin = (req, res) => {
 }
 
 const facebookLogin = (req, res) => {
-	console.log('FACEBOOK LOGIN REQ BODY', req.body)
 	const { userID, accessToken } = req.body
 
 	const url = `https://graph.facebook.com/v2.11/${userID}/?fields=id,name,email&access_token=${accessToken}`
@@ -313,7 +282,6 @@ const facebookLogin = (req, res) => {
 					user = new User({ name, email, password })
 					user.save((error, data) => {
 						if (error) {
-							console.log('ERROR FACEBOOK LOGIN ON USER SAVE', error)
 							return res.status(400).json({
 								error: 'User signup failed with facebook'
 							})

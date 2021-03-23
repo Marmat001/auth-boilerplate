@@ -38,8 +38,6 @@ const LogInPage = ({ history }) => {
       data: { email, password },
     })
       .then((resp) => {
-        console.log('Sign in successful!', resp)
-
         authenticate(resp, () => {
           setUserInfo({
             ...userInfo,
@@ -54,7 +52,6 @@ const LogInPage = ({ history }) => {
         })
       })
       .catch((err) => {
-        console.log('Sign in error', err.response.data)
         setUserInfo({ ...userInfo, buttonText: 'Submit' })
         toast.error(err.response.data.error)
       })
@@ -96,6 +93,10 @@ const LogInPage = ({ history }) => {
           Forgot Password?
         </Link>
       </div>
+
+      <Link to='/register' className='btn btn-sm btn-outline-primary mt-3'>
+        New customer? Register
+      </Link>
     </form>
   )
 

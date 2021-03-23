@@ -22,7 +22,7 @@ const ActivationPage = ({ match, history }) => {
     if (token) {
       setUserInfo({ ...userInfo, name, token })
     }
-  }, [])
+  }, [match.params.token, userInfo])
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -32,7 +32,6 @@ const ActivationPage = ({ match, history }) => {
       data: { token },
     })
       .then((resp) => {
-        console.log('Account activation', resp)
         setUserInfo({ ...userInfo, visibility: false })
         toast.success(resp.data.message)
         setTimeout(() => {
@@ -40,7 +39,6 @@ const ActivationPage = ({ match, history }) => {
         }, 1500)
       })
       .catch((err) => {
-        console.log('Account activation error', err.response.data.error)
         toast.error(err.response.data.error)
       })
   }

@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
-import 'react-toastify/dist/ReactToastify.min.css'
 import GoogleLogin from 'react-google-login'
+import { toast } from 'react-toastify'
 
 const Google = ({ informParent = (f) => f }) => {
 	const googleResponse = (response) => {
@@ -11,11 +11,10 @@ const Google = ({ informParent = (f) => f }) => {
 			data: { idToken: response.tokenId }
 		})
 			.then((response) => {
-				console.log('GOOGLE SIGNIN SUCCESS', response)
 				informParent(response)
 			})
 			.catch((error) => {
-				console.log('GOOGLE SIGNIN ERROR', error.response)
+				toast.error("Error signing in")
 			})
 	}
 	return (
