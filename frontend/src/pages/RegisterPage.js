@@ -7,15 +7,16 @@ import BluePrint from '../components/BluePrint'
 
 const initialState = {
   name: 'Markus',
-  email: 'markusmatu96@gmail.com',
-  password: '123456',
+  email: 'markusw880i@hotmail.com',
+  password: 'abohassan',
+  confirmPassword: 'abohassan',
   buttonText: 'Submit',
 }
 
 const RegisterPage = () => {
   const [userInfo, setUserInfo] = useState(initialState)
 
-  const { name, email, password, buttonText } = userInfo
+  const { name, email, password, confirmPassword, buttonText } = userInfo
 
   const handleChange = (name) => (e) => {
     setUserInfo({ ...userInfo, [name]: e.target.value })
@@ -23,6 +24,8 @@ const RegisterPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    if (password !== confirmPassword)
+      return toast.error('Passwords do not match')
     setUserInfo({ ...userInfo, buttonText: 'Submitting' })
     axios({
       method: 'POST',
@@ -36,6 +39,7 @@ const RegisterPage = () => {
           name: '',
           email: '',
           password: '',
+          confirmPassword: '',
           buttonText: 'Submitted',
         })
         toast.success(resp.data.message)
@@ -79,8 +83,22 @@ const RegisterPage = () => {
         />
       </div>
 
+      <div className='form-group'>
+        <label className='text-muted'>Confirm Password</label>
+        <input
+          onChange={handleChange('confirmPassword')}
+          value={confirmPassword}
+          type='password'
+          className='form-control'
+        />
+      </div>
+
       <div>
-        <button onClick={handleSubmit} className='btn btn-primary btn-raised'>
+        <button
+          disabled={buttonText === 'Submitted' || buttonText === 'Submitting'}
+          onClick={handleSubmit}
+          className='btn btn-primary btn-raised'
+        >
           {buttonText}
         </button>
       </div>

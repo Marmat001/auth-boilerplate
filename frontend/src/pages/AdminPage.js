@@ -59,7 +59,7 @@ const AdminPage = ({ history }) => {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (password !== confirmPassword)
-    return toast.error('Passwords do not match')
+      return toast.error('Passwords do not match')
     setUserInfo({ ...userInfo, buttonText: 'Submitting' })
     axios({
       method: 'PUT',
@@ -72,7 +72,12 @@ const AdminPage = ({ history }) => {
       .then((resp) => {
         console.log('Profile update successful!', resp)
         updateUserInfo(resp, () => {
-          setUserInfo({ ...userInfo, buttonText: 'Submitted' })
+          setUserInfo({
+            ...userInfo,
+            password: '',
+            confirmPassword: '',
+            buttonText: 'Submitted',
+          })
           toast.success('Profile updated successfully!')
         })
       })
@@ -136,7 +141,11 @@ const AdminPage = ({ history }) => {
       </div>
 
       <div>
-        <button onClick={handleSubmit} className='btn btn-primary btn-raised'>
+        <button
+          disabled={buttonText === 'Submitting'}
+          onClick={handleSubmit}
+          className='btn btn-primary btn-raised'
+        >
           {buttonText}
         </button>
       </div>

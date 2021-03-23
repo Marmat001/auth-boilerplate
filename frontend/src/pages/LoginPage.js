@@ -8,8 +8,8 @@ import Google from '../components/GoogleLogin'
 import Facebook from '../components/FacebookLogin'
 
 const initialState = {
-  email: 'markusmatu96@gmail.com',
-  password: '123456',
+  email: 'markusw880i@hotmail.com',
+  password: 'abohassan',
   buttonText: 'Submit',
 }
 

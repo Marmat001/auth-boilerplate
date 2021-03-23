@@ -50,7 +50,7 @@ const ForgotPasswordPage = ({ history }) => {
       </div>
 
       <div>
-        <button onClick={handleSubmit} className='btn btn-primary btn-raised'>
+        <button   disabled={buttonText === 'Requested' || buttonText === 'Submitting'} onClick={handleSubmit} className='btn btn-primary btn-raised'>
           {buttonText}
         </button>
       </div>

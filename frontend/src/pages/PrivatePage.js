@@ -71,7 +71,12 @@ const PrivatePage = ({ history }) => {
       .then((resp) => {
         console.log('Profile update successful!', resp)
         updateUserInfo(resp, () => {
-          setUserInfo({ ...userInfo, buttonText: 'Submitted' })
+          setUserInfo({
+            ...userInfo,
+            password: '',
+            confirmPassword: '',
+            buttonText: 'Submitted',
+          })
           toast.success('Profile updated successfully!')
         })
       })
@@ -135,7 +140,11 @@ const PrivatePage = ({ history }) => {
       </div>
 
       <div>
-        <button onClick={handleSubmit} className='btn btn-primary btn-raised'>
+        <button
+          disabled={buttonText === 'Submitting'}
+          onClick={handleSubmit}
+          className='btn btn-primary btn-raised'
+        >
           {buttonText}
         </button>
       </div>

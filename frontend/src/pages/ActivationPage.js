@@ -10,10 +10,10 @@ const initialState = {
   visibility: true,
 }
 
-const ActivationPage = ({ match }) => {
+const ActivationPage = ({ match, history }) => {
   const [userInfo, setUserInfo] = useState(initialState)
 
-  const { name, token, visibility } = userInfo
+  const { name, token } = userInfo
 
   useEffect(() => {
     const token = match.params.token
@@ -35,6 +35,9 @@ const ActivationPage = ({ match }) => {
         console.log('Account activation', resp)
         setUserInfo({ ...userInfo, visibility: false })
         toast.success(resp.data.message)
+        setTimeout(() => {
+          history.push('/login')
+        }, 1500)
       })
       .catch((err) => {
         console.log('Account activation error', err.response.data.error)

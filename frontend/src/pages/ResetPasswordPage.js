@@ -8,10 +8,11 @@ const initialState = {
   name: '',
   token: '',
   newPassword: '',
+  confirmNewPassword: '',
   buttonText: 'Reset password',
 }
 
-const ResetPasswordPage = ({ match }) => {
+const ResetPasswordPage = ({ match, history }) => {
   const [userInfo, setUserInfo] = useState(initialState)
 
   useEffect(() => {
@@ -22,14 +23,16 @@ const ResetPasswordPage = ({ match }) => {
     }
   }, [])
 
-  const { name, token, newPassword, buttonText } = userInfo
+  const { name, token, newPassword, confirmNewPassword, buttonText } = userInfo
 
-  const handleChange = (e) => {
-    setUserInfo({ ...userInfo, newPassword: e.target.value })
+  const handleChange = (name) => (e) => {
+    setUserInfo({ ...userInfo, [name]: e.target.value })
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    if (newPassword !== confirmNewPassword)
+      return toast.error('Passwords do not match')
     setUserInfo({ ...userInfo, buttonText: 'Submitting' })
     axios({
       method: 'PUT',
@@ -40,6 +43,9 @@ const ResetPasswordPage = ({ match }) => {
         console.log('reset password successful!', resp)
         toast.success(resp.data.message)
         setUserInfo({ ...userInfo, buttonText: 'Done' })
+        setTimeout(() => {
+          history.push('/login')
+        }, 1500)
       })
       .catch((err) => {
         console.log('reset password error', err.response.data)
@@ -51,19 +57,31 @@ const ResetPasswordPage = ({ match }) => {
   const resetPasswordForm = (e) => (
     <form>
       <div className='form-group'>
-        <label className='text-muted'>Email</label>
+        <label className='text-muted'>New Password</label>
         <input
-          onChange={handleChange}
+          onChange={handleChange('newPassword')}
           value={newPassword}
           type='password'
           className='form-control'
-          placeholder='Enter new password'
-          requried
+        />
+      </div>
+
+      <div className='form-group'>
+        <label className='text-muted'>Confirm New Password</label>
+        <input
+          onChange={handleChange('confirmNewPassword')}
+          value={confirmNewPassword}
+          type='password'
+          className='form-control'
         />
       </div>
 
       <div>
-        <button onClick={handleSubmit} className='btn btn-primary btn-raised'>
+        <button
+          disabled={buttonText === 'Done' || buttonText === 'Submitting'}
+          onClick={handleSubmit}
+          className='btn btn-primary btn-raised'
+        >
           {buttonText}
         </button>
       </div>
