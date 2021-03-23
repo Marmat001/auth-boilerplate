@@ -35,7 +35,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 // 	})
 // }
 
-const signup = (req, res) => {
+const register = (req, res) => {
 	const { name, email, password } = req.body
 
 	User.findOne({ email }).exec((err, user) => {
@@ -110,7 +110,7 @@ const accountActivation = (req, res) => {
 	}
 }
 
-const signin = (req, res) => {
+const login = (req, res) => {
 	const { email, password } = req.body
 
 	User.findOne({ email }).exec((error, user) => {
@@ -336,9 +336,9 @@ const facebookLogin = (req, res) => {
 }
 
 module.exports = {
-	signup,
+	register,
 	accountActivation,
-	signin,
+	login,
 	requireUserInfo,
 	adminMiddleware,
 	forgotPassword,

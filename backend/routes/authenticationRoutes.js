@@ -2,9 +2,9 @@ const express = require('express')
 const router = express.Router()
 
 const {
-	signup,
+	register,
 	accountActivation,
-	signin,
+	login,
 	forgotPassword,
 	resetPassword,
 	googleLogin,
@@ -19,9 +19,9 @@ const {
 } = require('../validators/authentication')
 const { executeValidation } = require('../validators')
 
-router.post('/signup', signupValidator, executeValidation, signup)
+router.post('/register', signupValidator, executeValidation, register)
 router.post('/account-activation', accountActivation)
-router.post('/signin', signInValidator, executeValidation, signin)
+router.post('/login', signInValidator, executeValidation, login)
 
 router.put('/forgot-password', forgotPasswordValidator, executeValidation, forgotPassword)
 router.put('/reset-password', resetPasswordValidator, executeValidation, resetPassword)
