@@ -93,7 +93,14 @@ const RegisterPage = () => {
 
       <div>
         <button
-          disabled={buttonText === 'Submitted' || buttonText === 'Submitting'}
+          disabled={
+            !email ||
+            !password ||
+            !name ||
+            !confirmPassword ||
+            buttonText === 'Submitted' ||
+            buttonText === 'Submitting'
+          }
           onClick={handleSubmit}
           className='btn btn-primary btn-raised mr-3'
         >

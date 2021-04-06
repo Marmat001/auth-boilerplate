@@ -21,7 +21,7 @@ const ResetPasswordPage = ({ match, history }) => {
     if (token) {
       setUserInfo({ ...userInfo, name, token })
     }
-     // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [])
 
   const { name, token, newPassword, confirmNewPassword, buttonText } = userInfo
@@ -77,7 +77,12 @@ const ResetPasswordPage = ({ match, history }) => {
 
       <div>
         <button
-          disabled={buttonText === 'Done' || buttonText === 'Submitting'}
+          disabled={
+            !newPassword ||
+            !confirmNewPassword ||
+            buttonText === 'Done' ||
+            buttonText === 'Submitting'
+          }
           onClick={handleSubmit}
           className='btn btn-primary btn-raised'
         >
